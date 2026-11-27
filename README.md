@@ -7,6 +7,7 @@
 ```
 slides/
 ├─ index.html          目錄頁（DECKS 清單）
+├─ 404.html            找不到網址時的頁面
 ├─ robots.txt          不讓搜尋引擎收錄
 └─ YYYY-MM-主題/
      └─ index.html     → https://vm3vup54.github.io/slides/YYYY-MM-主題/
@@ -15,7 +16,7 @@ slides/
 ## 新增一份簡報
 
 1. 建資料夾 `YYYY-MM-英文或拼音主題/`，把簡報複製成 `index.html`。
-2. 在根目錄 `index.html` 的 `DECKS` 最上面加一筆 `{date, path, title, summary}`。
+2. 在根目錄 `index.html` 的 `DECKS` 最上面加一筆 `{date, path, pages, thumb, title, summary}`；`thumb` 是縮圖用第幾頁（封面都一樣，挑代表性的內容頁，預設 2）。
 3. 指定檔案 `git add` → `git commit` → `git push`，約 1 分鐘後網址生效。
 
 ## 注意
