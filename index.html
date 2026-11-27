@@ -46,7 +46,23 @@ p{text-wrap:pretty}
 
 /* 主視覺 */
 main{max-width:1120px;margin:0 auto;padding:0 24px}
-.hero{padding:160px 0 64px;text-align:center}
+.hero{padding:128px 0 40px;text-align:center}
+/* 首屏背景：點狀網格＋緩慢飄動的綠色光暈 */
+.hero-bg{position:absolute;top:0;left:0;right:0;height:760px;overflow:hidden;pointer-events:none;z-index:-1;
+  background-image:radial-gradient(rgba(20,26,23,.10) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 25%,transparent 78%)}
+.hero-bg i{position:absolute;border-radius:50%;will-change:transform}
+.hero-bg .b1{width:560px;height:560px;left:calc(50% - 560px);top:20px;background:radial-gradient(circle,rgba(19,134,94,.22),transparent 68%);animation:drift1 18s ease-in-out infinite alternate}
+.hero-bg .b2{width:480px;height:480px;left:calc(50% + 20px);top:110px;background:radial-gradient(circle,rgba(47,166,122,.18),transparent 68%);animation:drift2 23s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(140px,70px) scale(1.12)}}
+@keyframes drift2{to{transform:translate(-120px,-50px) scale(.9)}}
+/* 首屏文字依序浮現 */
+.hero>*{animation:up .9s var(--ease) both;animation-delay:calc(var(--d,0) * 90ms)}
+@keyframes up{from{opacity:0;transform:translateY(20px)}}
+/* 標題「簡報」綠色漸層＋螢光筆底線 */
+.hero h1 .hl{position:relative;display:inline-block;background:linear-gradient(90deg,var(--g),#2FA67A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .hl::after{content:"";position:absolute;left:-.04em;right:-.04em;bottom:.04em;height:.26em;border-radius:9999px;background:rgba(19,134,94,.16);transform:scaleX(0);transform-origin:left;animation:line .9s .75s var(--ease) forwards}
+@keyframes line{to{transform:scaleX(1)}}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gd);margin-bottom:24px}
 .eyebrow i{width:8px;height:8px;border-radius:9999px;background:var(--g)}
 .hero h1{max-width:680px;margin:0 auto;background:linear-gradient(90deg,#000 0%,#666 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -55,7 +71,7 @@ main{max-width:1120px;margin:0 auto;padding:0 24px}
 kbd{display:inline-block;min-width:24px;padding:2px 8px;margin:0 4px;border-radius:6px;background:var(--card);box-shadow:0 0 0 1px var(--line),0 2px 0 var(--line);font:inherit;color:var(--ink2);text-align:center}
 
 /* 搜尋 */
-.search{position:relative;display:block;max-width:480px;margin:40px auto 0}
+.search{position:relative;display:block;max-width:480px;margin:32px auto 0}
 .search svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--mute);pointer-events:none}
 .search input{width:100%;height:48px;padding:12px 16px 12px 48px;border:0;border-radius:9999px;background:var(--card);box-shadow:0 0 0 1px var(--line);font:inherit;font-size:16px;color:var(--ink);transition:box-shadow .3s var(--ease)}
 .search input::placeholder{color:var(--mute)}
@@ -63,6 +79,7 @@ kbd{display:inline-block;min-width:24px;padding:2px 8px;margin:0 4px;border-radi
 
 /* 卡片 */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,352px));justify-content:center;gap:24px;padding-bottom:96px}
+.card[hidden]{display:none}
 .card{position:relative;display:flex;flex-direction:column;background:var(--card);border-radius:24px;padding:8px;box-shadow:0 0 0 1px var(--line);transition:transform .5s var(--ease),box-shadow .3s var(--ease)}
 .card:hover{transform:translateY(-4px);box-shadow:0 0 0 1px var(--line),0 24px 48px -24px rgba(14,107,74,.35)}
 .card:has(.open:focus-visible){box-shadow:0 0 0 2px var(--g),0 0 0 6px var(--g-soft)}
@@ -71,6 +88,12 @@ kbd{display:inline-block;min-width:24px;padding:2px 8px;margin:0 4px;border-radi
 .thumb iframe.ready{opacity:1}
 .thumb .sk{position:absolute;inset:0;background:linear-gradient(90deg,#EEF2EF 0%,#F6F8F7 50%,#EEF2EF 100%);background-size:200% 100%;animation:sk 1.4s var(--ease) infinite}
 @keyframes sk{to{background-position:-200% 0}}
+/* 翻頁預覽：頁碼標籤＋進度條 */
+.thumb .pg{position:absolute;top:10px;right:10px;padding:2px 8px;border-radius:9999px;background:rgba(20,26,23,.72);color:#fff;font-size:12px;line-height:16px;font-weight:600;font-variant-numeric:tabular-nums;opacity:0;transform:translateY(-4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.thumb .bar{position:absolute;left:12px;right:12px;bottom:10px;height:4px;border-radius:9999px;background:rgba(20,26,23,.14);overflow:hidden;opacity:0;transition:opacity .3s var(--ease)}
+.thumb .bar i{display:block;height:100%;width:0;border-radius:inherit;background:var(--g);transition:width .6s var(--ease)}
+.thumb.playing .pg{opacity:1;transform:none}
+.thumb.playing .bar{opacity:1}
 .body{display:flex;flex-direction:column;gap:8px;padding:16px 16px 12px;flex:1}
 .meta{display:flex;align-items:center;gap:8px;color:var(--mute)}
 .meta .dot{width:4px;height:4px;border-radius:9999px;background:currentColor;opacity:.5}
@@ -107,7 +130,8 @@ footer{border-top:1px solid var(--line);padding:32px 24px 48px;text-align:center
 
 @media (max-width:640px){
   .heading-1{font-size:36px;line-height:40px}
-  .hero{padding:128px 0 48px}
+  .hero{padding:112px 0 32px}
+  .hero-bg{height:620px}
   .lead br{display:none}
   .grid{grid-template-columns:1fr}
   .nav{gap:8px}
@@ -115,6 +139,8 @@ footer{border-top:1px solid var(--line);padding:32px 24px 48px;text-align:center
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
   .rv{transform:none}
+  .hero-bg i{display:none}
+  .hero h1 .hl::after{transform:none}
   .card:hover{transform:none}
 }
 </style>
@@ -130,13 +156,15 @@ footer{border-top:1px solid var(--line);padding:32px 24px 48px;text-align:center
   <span class="count caption-3" id="count">0 份</span>
 </nav>
 
+<div class="hero-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i></div>
+
 <main>
   <section class="hero">
     <div class="eyebrow caption-3"><i></i>互動 HTML 簡報</div>
-    <h1 class="heading-1">做好的簡報，<br>都放在這裡</h1>
-    <p class="lead body-3">每份都是單一 HTML 檔，點開就能在瀏覽器播放，<br>不用安裝軟體，也不用下載。</p>
-    <div class="keys caption-4"><span><kbd>←</kbd><kbd>→</kbd>換頁</span><span><kbd>F</kbd>全螢幕</span><span>手機可左右滑動</span></div>
-    <label class="search">
+    <h1 class="heading-1" style="--d:1">做好的<span class="hl">簡報</span>，<br>都放在這裡</h1>
+    <p class="lead body-3" style="--d:2">每份都是單一 HTML 檔，點開就能在瀏覽器播放，<br>不用安裝軟體，也不用下載。</p>
+    <div class="keys caption-4" style="--d:3"><span><kbd>←</kbd><kbd>→</kbd>換頁</span><span><kbd>F</kbd>全螢幕</span><span>手機可左右滑動</span></div>
+    <label class="search" style="--d:4">
       <svg viewBox="0 0 256 256" aria-hidden="true"><path fill="currentColor" d="M229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32ZM40 112a72 72 0 1 1 72 72 72.08 72.08 0 0 1-72-72Z"/></svg>
       <input id="q" type="search" placeholder="搜尋標題或關鍵字" aria-label="搜尋簡報" autocomplete="off">
     </label>
@@ -172,27 +200,63 @@ $('#count').textContent=DECKS.length+' 份';
 /* 縮圖：載入簡報的代表頁（預設第 2 頁），直接跳到動畫播完的畫面，等比縮小 */
 const ro=new ResizeObserver(es=>es.forEach(e=>{const f=e.target.querySelector('iframe');if(f)f.style.transform='scale('+e.contentRect.width/1920+')'}));
 const lazy=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;lazy.unobserve(e.target);
-  const t=e.target,f=document.createElement('iframe');f.title='';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.src=t.dataset.src;
-  f.onload=()=>{try{const w=f.contentWindow,d=f.contentDocument;['hint','ui'].forEach(id=>{const e=d.getElementById(id);if(e)e.style.visibility='hidden'});if(w.__deck)w.__deck.show(+t.dataset.page-1,true)}catch(_){}setTimeout(()=>{f.classList.add('ready');t.querySelector('.sk')?.remove()},reduce?0:300)};
-  t.appendChild(f);f.style.transform='scale('+t.clientWidth/1920+')';ro.observe(t)}),{rootMargin:'200px'});
-const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');reveal.unobserve(e.target)}}),{threshold:.15});
+  const t=e.target,f=document.createElement('iframe');f.title='';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.src=t.dataset.src;t._f=f;
+  f.onload=()=>{try{const w=f.contentWindow,d=f.contentDocument;['hint','ui'].forEach(id=>{const e=d.getElementById(id);if(e)e.style.visibility='hidden'});if(w.__deck)w.__deck.show(+t.dataset.page-1,true)}catch(_){}setTimeout(()=>{f.classList.add('ready');t.querySelector('.sk')?.remove();if(cur===t){cur=null;play(t)}},reduce?0:300)};
+  t.prepend(f);f.style.transform='scale('+t.clientWidth/1920+')';ro.observe(t)}),{rootMargin:'200px'});
+const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const c=e.target;c.classList.add('in');reveal.unobserve(c);setTimeout(()=>c.style.transitionDelay='',1200)}}),{threshold:.15});
 
-function render(){
-  const k=q.value.trim().toLowerCase(),hit=DECKS.filter(d=>!k||(d.title+d.summary+d.date).toLowerCase().includes(k));
-  if(!hit.length){
-    list.innerHTML=DECKS.length
-      ?'<div class="empty">'+ICON.empty+'<b class="title-1">找不到符合「'+esc(q.value.trim())+'」的簡報</b><span class="body-6">換個關鍵字，或清除搜尋看全部簡報。</span></div>'
-      :'<div class="empty">'+ICON.empty+'<b class="title-1">還沒有公開的簡報</b><span class="body-6">新增第一份後就會出現在這裡。</span></div>';
-    return}
-  list.innerHTML=hit.map((d,i)=>'<article class="card rv" style="transition-delay:'+Math.min(i*60,400)+'ms">'
-    +'<div class="thumb" data-src="'+esc(d.path)+'/" data-page="'+(d.thumb||2)+'"><div class="sk"></div></div>'
+/* 翻頁預覽：電腦滑過（或用鍵盤選到）卡片時自動翻頁；手機是捲到畫面中間的那張自動翻。同一時間只翻一張 */
+const canHover=matchMedia('(hover:hover) and (pointer:fine)').matches;
+let cur=null,timer=0;
+function deckOf(t){try{return t._f&&t._f.classList.contains('ready')&&t._f.contentWindow.__deck||null}catch(_){return null}}
+function mark(t,i,n){t.querySelector('.bar i').style.width=((i+1)/n*100)+'%';t.querySelector('.pg').textContent=(i+1)+' / '+n}
+function play(t){
+  if(reduce||cur===t)return;stop();cur=t;
+  const d=deckOf(t);if(!d||!(d.n>1))return;
+  let i=+t.dataset.page-1;mark(t,i,d.n);t.classList.add('playing');
+  timer=setInterval(()=>{i=(i+1)%d.n;try{d.show(i,true)}catch(_){}
+    t._f.animate([{opacity:.35},{opacity:1}],{duration:380,easing:'ease-out'});mark(t,i,d.n)},1200);
+}
+function stop(){
+  clearInterval(timer);const t=cur;cur=null;if(!t)return;t.classList.remove('playing');
+  const d=deckOf(t);if(d)try{d.show(+t.dataset.page-1,true)}catch(_){}
+}
+const mid=(!canHover&&!reduce)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)play(e.target);else if(cur===e.target)stop()}),{rootMargin:'-40% 0px -40% 0px'}):null;
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stop()});
+
+/* 卡片只建一次，搜尋時用顯示／隱藏切換，縮圖不必重新載入 */
+const cards=DECKS.map((d,i)=>{
+  const el=document.createElement('article');el.className='card rv';el.style.transitionDelay=Math.min(i*60,400)+'ms';
+  el.innerHTML='<div class="thumb" data-src="'+esc(d.path)+'/" data-page="'+(d.thumb||2)+'"><div class="sk"></div><span class="pg" aria-hidden="true"></span><span class="bar" aria-hidden="true"><i></i></span></div>'
     +'<div class="body"><div class="meta caption-4"><span>'+esc(d.date)+'</span>'+(d.pages?'<i class="dot"></i><span>'+d.pages+' 頁</span>':'')+'</div>'
     +'<h2 class="title-1"><a class="open" href="'+esc(d.path)+'/">'+esc(d.title)+'</a></h2>'
     +'<p class="body-6">'+esc(d.summary||'')+'</p></div>'
     +'<div class="actions"><span class="go button-sm">開啟簡報'+ICON.arrow+'</span>'
-    +'<button class="copy button-sm" type="button" data-path="'+esc(d.path)+'" aria-label="複製「'+esc(d.title)+'」的連結">'+ICON.link+'複製連結</button></div></article>').join('');
-  list.querySelectorAll('.thumb').forEach(t=>lazy.observe(t));
-  list.querySelectorAll('.rv').forEach(c=>reduce?c.classList.add('in'):reveal.observe(c));
+    +'<button class="copy button-sm" type="button" data-path="'+esc(d.path)+'" aria-label="複製「'+esc(d.title)+'」的連結">'+ICON.link+'複製連結</button></div>';
+  const t=el.querySelector('.thumb');
+  if(canHover){el.addEventListener('mouseenter',()=>play(t));el.addEventListener('mouseleave',()=>{if(cur===t)stop()})}
+  el.addEventListener('focusin',()=>play(t));el.addEventListener('focusout',e=>{if(!el.contains(e.relatedTarget)&&cur===t)stop()});
+  list.appendChild(el);lazy.observe(t);if(mid)mid.observe(t);reduce?el.classList.add('in'):reveal.observe(el);
+  return{el,text:(d.title+d.summary+d.date).toLowerCase()};
+});
+const empty=document.createElement('div');empty.className='empty';empty.hidden=true;list.appendChild(empty);
+if(!DECKS.length){empty.innerHTML=ICON.empty+'<b class="title-1">還沒有公開的簡報</b><span class="body-6">新增第一份後就會出現在這裡。</span>';empty.hidden=false}
+
+/* 搜尋：留下的卡片從原位置滑到新位置（FLIP 動畫），新出現的淡入 */
+const EASE='cubic-bezier(.22,1,.36,1)';
+function filter(){
+  if(!DECKS.length)return;
+  const k=q.value.trim().toLowerCase();
+  const before=new Map(cards.filter(c=>!c.el.hidden).map(c=>[c.el,c.el.getBoundingClientRect()]));
+  let shown=0;
+  cards.forEach(c=>{const on=!k||c.text.includes(k);if(!on&&cur&&c.el.contains(cur))stop();c.el.hidden=!on;if(on)shown++});
+  empty.hidden=!!shown;
+  if(!shown)empty.innerHTML=ICON.empty+'<b class="title-1">找不到符合「'+esc(q.value.trim())+'」的簡報</b><span class="body-6">換個關鍵字，或清除搜尋看全部簡報。</span>';
+  if(reduce)return;
+  cards.forEach(c=>{if(c.el.hidden)return;const a=before.get(c.el),b=c.el.getBoundingClientRect();
+    if(a){const dx=a.left-b.left,dy=a.top-b.top;if(dx||dy)c.el.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:550,easing:EASE})}
+    else c.el.animate([{opacity:0,transform:'scale(.96)'},{opacity:1,transform:'none'}],{duration:450,easing:EASE})});
+  if(!shown)empty.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:400,easing:EASE});
 }
 let tt;
 function say(m,err){toast.querySelector('span').textContent=m;toast.classList.toggle('err',!!err);toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),err?6000:2200)}
@@ -200,8 +264,7 @@ function legacyCopy(t){const a=document.createElement('textarea');a.value=t;a.se
 list.addEventListener('click',async e=>{const b=e.target.closest('.copy');if(!b)return;e.preventDefault();
   const url=new URL(b.dataset.path+'/',location.href).href;
   try{await navigator.clipboard.writeText(url);say('已複製連結')}catch(_){legacyCopy(url)?say('已複製連結'):say('這個瀏覽器不允許自動複製，請手動複製：'+url,true)}});
-q.addEventListener('input',render);
-render();
+q.addEventListener('input',filter);
 </script>
 </body>
 </html>
