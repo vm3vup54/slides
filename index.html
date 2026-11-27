@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>簡報分享</title>
+<style>
+:root{--g:#13865E;--gd:#0E6B4A;--ink:#1E2B25;--mute:#5F6E67;--line:#D5E2DA;--soft:#EAF5EF;
+--f:"Microsoft JhengHei","微軟正黑體","PingFang TC","Noto Sans TC",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--f);color:var(--ink);background:#F6FAF8;line-height:1.6}
+header{background:var(--gd);color:#fff;padding:48px 24px 40px}
+.w{max-width:880px;margin:0 auto}
+h1{margin:0;font-size:32px;letter-spacing:.04em}
+header p{margin:8px 0 0;opacity:.85}
+main{padding:32px 24px 64px}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+a.c{display:block;background:#fff;border-radius:14px;padding:20px 24px;text-decoration:none;color:inherit;box-shadow:0 0 0 2px var(--line);transition:box-shadow .2s}
+a.c:hover,a.c:focus-visible{box-shadow:0 0 0 3px var(--g);outline:none}
+.d{font-size:14px;color:var(--mute)}
+.t{font-size:22px;font-weight:700;color:var(--gd);margin:2px 0 4px}
+.s{margin:0;color:var(--mute)}
+.empty{background:#fff;border-radius:14px;padding:32px;text-align:center;color:var(--mute);box-shadow:0 0 0 2px var(--line)}
+footer{text-align:center;color:var(--mute);font-size:13px;padding-bottom:32px}
+</style>
+</head>
+<body>
+<header><div class="w"><h1>簡報分享</h1><p>點選標題開啟簡報；鍵盤左右鍵或點畫面換頁。</p></div></header>
+<main class="w">
+  <!-- 新增簡報：在 DECKS 最上面加一筆 {date, path, title, summary}，最新的放最前面 -->
+  <ul id="list"></ul>
+</main>
+<footer>簡報皆為單一 HTML 檔，可離線播放</footer>
+<script>
+const DECKS=[
+];
+const ul=document.getElementById('list');
+if(!DECKS.length){ul.outerHTML='<div class="empty">目前還沒有公開的簡報</div>'}
+else{for(const d of DECKS){const li=document.createElement('li'),a=document.createElement('a');a.className='c';a.href=d.path+'/';
+  a.innerHTML='<div class="d"></div><div class="t"></div><p class="s"></p>';
+  a.querySelector('.d').textContent=d.date;a.querySelector('.t').textContent=d.title;a.querySelector('.s').textContent=d.summary||'';
+  li.appendChild(a);ul.appendChild(li)}}
+</script>
+</body>
+</html>
