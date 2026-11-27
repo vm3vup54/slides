@@ -50,12 +50,14 @@ main{max-width:1120px;margin:0 auto;padding:0 24px}
 /* 首屏背景：點狀網格＋緩慢飄動的綠色光暈 */
 .hero-bg{position:absolute;top:0;left:0;right:0;height:760px;overflow:hidden;pointer-events:none;z-index:-1;
   background-image:radial-gradient(rgba(20,26,23,.10) 1px,transparent 1.4px);background-size:22px 22px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 25%,transparent 78%)}
+  -webkit-mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 35%,transparent 85%);mask-image:radial-gradient(ellipse 70% 62% at 50% 34%,#000 35%,transparent 85%)}
 .hero-bg i{position:absolute;border-radius:50%;will-change:transform}
-.hero-bg .b1{width:560px;height:560px;left:calc(50% - 560px);top:20px;background:radial-gradient(circle,rgba(19,134,94,.22),transparent 68%);animation:drift1 18s ease-in-out infinite alternate}
-.hero-bg .b2{width:480px;height:480px;left:calc(50% + 20px);top:110px;background:radial-gradient(circle,rgba(47,166,122,.18),transparent 68%);animation:drift2 23s ease-in-out infinite alternate}
-@keyframes drift1{to{transform:translate(140px,70px) scale(1.12)}}
-@keyframes drift2{to{transform:translate(-120px,-50px) scale(.9)}}
+.hero-bg .b1{width:560px;height:560px;left:calc(50% - 560px);top:20px;background:radial-gradient(circle,rgba(19,134,94,.36),transparent 68%);animation:drift1 11s ease-in-out infinite alternate}
+.hero-bg .b2{width:480px;height:480px;left:calc(50% + 20px);top:110px;background:radial-gradient(circle,rgba(47,166,122,.30),transparent 68%);animation:drift2 14s ease-in-out infinite alternate}
+.hero-bg .b3{width:360px;height:360px;left:calc(50% - 180px);top:300px;background:radial-gradient(circle,rgba(126,211,168,.32),transparent 68%);animation:drift3 9s ease-in-out infinite alternate}
+@keyframes drift1{50%{transform:translate(180px,-30px) scale(1.15)}to{transform:translate(260px,110px) scale(.95)}}
+@keyframes drift2{50%{transform:translate(-160px,60px) scale(.85)}to{transform:translate(-240px,-40px) scale(1.12)}}
+@keyframes drift3{to{transform:translate(0,-180px) scale(1.25)}}
 /* 首屏文字依序浮現 */
 .hero>*{animation:up .9s var(--ease) both;animation-delay:calc(var(--d,0) * 90ms)}
 @keyframes up{from{opacity:0;transform:translateY(20px)}}
@@ -112,6 +114,7 @@ kbd{display:inline-block;min-width:24px;padding:2px 8px;margin:0 4px;border-radi
 .copy:focus-visible{outline:2px solid var(--g);outline-offset:2px}
 
 /* 空狀態 */
+.empty[hidden]{display:none}
 .empty{grid-column:1/-1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:64px 24px;border-radius:24px;background:var(--card);box-shadow:0 0 0 1px var(--line);text-align:center;color:var(--mute)}
 .empty svg{width:32px;height:32px;color:var(--g);margin-bottom:8px}
 .empty b{color:var(--ink)}
@@ -156,7 +159,7 @@ footer{border-top:1px solid var(--line);padding:32px 24px 48px;text-align:center
   <span class="count caption-3" id="count">0 份</span>
 </nav>
 
-<div class="hero-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i></div>
+<div class="hero-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
 
 <main>
   <section class="hero">
